@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# FAIMS3 QR Code scanning elaboration
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Project to explore QR code scanning in Capacitor testing on iOS and Android.
 
-## Available Scripts
+This project is based on the create-react-app typescript template.  It uses the
+[@capacitor-community/barcode-scanner](https://github.com/capacitor-community/barcode-scanner)
+plugin which implements QR code scanning on iOS and Android (but not on the web).  
 
-In the project directory, you can run:
+The QR code scanner is implemented as a Formik form field compatible with the
+main FAIMS app.  It renders as a button which when clicked starts the QR code
+scan.  While scanning we need to make the app transparent so that the camera
+view is visible.  The approach I've taken is to use `ReactDOM.createPortal`
+to insert a container `<div>` as a child of the body of the page. This allows
+me to then set `visibility: hidden` on the rest of the page so that there is
+nothing behind my new div.  The div is mostly transparent but shows a message,
+a cancel button and a target square.  This need to hide the main app makes it
+a bit hard for this to be a plugin.  
 
-### `yarn start`
+The position of the target square is not calibrated - it's where it seems to be
+on my Android phone. I've not done much checking of this, it may be different on
+e.g. a tablet device.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Permissions
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+We need to get permission to use the camera. In this example I've made the call 
+to check permssions in the start scan action.  In the main app we'd most likely 
+have done this already so the call would succeed.
 
-### `yarn test`
+## Android
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+No changes are needed to the Android project for this to work.
 
-### `yarn build`
+## iOS
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create iOS project:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```shell
+yarn add @capacitor/ios
+npx cap add ios
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Need to add a description to the request for camera permissions. Edit 
+`ios/App/App/Info.plist` and add:
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```xml
+ <key>NSCameraUsageDescription</key>
+ <string>This app uses the camera to scan a QR Code.</string>
+```

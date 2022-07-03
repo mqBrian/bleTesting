@@ -13,9 +13,9 @@
  * See, the License, for the specific language governing permissions and
  * limitations under the License.
  *
- * Filename: MapFormField.tsx
+ * Filename: QRCodeFormField.tsx
  * Description:
- *   Implement MapFormField for entry of data via maps in FAIMS
+ *   Implement QRCodeFormField for scanning QR codes into a field in FAIMS3
  */
 
 import React, { useState } from 'react'
