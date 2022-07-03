@@ -1,0 +1,6 @@
+{
+	"appId": "org.fedarch.faims3",
+	"appName": "faims3-qrcode-example",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

@@ -21,14 +21,13 @@
 import React, { useState } from 'react'
 import styles from './QRCodeFormField.module.css'
 import Button from '@mui/material/Button'
-import Dialog from "@mui/material/Dialog";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import CloseIcon from "@mui/icons-material/Close";
 
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner'
 
 import { FieldProps } from 'formik'
+import ReactDOM from 'react-dom'
+
+
 export interface QRCodeFieldProps extends FieldProps {
   label?: string
 }
@@ -55,7 +54,10 @@ export function QRCodeFormField({
     console.log('Starting scan right now...')
 
     setScanning(true)
-    document.getElementsByTagName('body')[0].classList.add('transparent')
+    const formcontainer = document.getElementById('demoformcontainer')
+    if (formcontainer) {
+      formcontainer.classList.add('hidden')
+    }
 
     console.log('Checking for permissions')
     // check that we have camera permission
@@ -78,12 +80,15 @@ export function QRCodeFormField({
     } else {
       console.log('No permission for QR')
     }
-    setScanning(false)
+    stopScan()
   }
 
   const stopScan = () => {
     BarcodeScanner.showBackground()
-    document.getElementsByTagName('body')[0].classList.remove('transparent')
+    const formcontainer = document.getElementById('demoformcontainer')
+    if (formcontainer) {
+      formcontainer.classList.remove('hidden')
+    }
     BarcodeScanner.stopScan()
     setScanning(false)
   }
@@ -92,27 +97,18 @@ export function QRCodeFormField({
   // to display below the form field
   const valueText = JSON.stringify(state)
 
+  console.log("Render...", scanning)
+
   if (scanning) {
-    return (
-      <Dialog
-        fullScreen
-        open={scanning}
-        onClose={stopScan}
-      >
-        <Box>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={stopScan}
-            aria-label="close"
-          >
-            <CloseIcon />
-          </IconButton>
-        </Box>
+    const target = document.getElementById('qrscanner')
+    if (target) {
+    return ReactDOM.createPortal(
+    (
           <div className={styles.container}>
             <div className={styles.barcodeContainer}>
               <div className={styles.relative}>
                 <p>Aim your camera at a barcode</p>
+                <Button variant='outlined'  onClick={stopScan}>Stop Scan</Button>
               </div>
               <div className={styles.square}>
                 <div className={styles.outer}>
@@ -121,8 +117,12 @@ export function QRCodeFormField({
               </div>
             </div>
           </div>
-      </Dialog>
-    )
+    ), 
+     target )
+    } else {
+      // how did we get here? 
+      return (<div>Something went wrong</div>)
+    }
   } else {
     return (
       <div>
