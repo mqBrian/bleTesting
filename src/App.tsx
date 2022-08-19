@@ -1,12 +1,18 @@
 //@ts-ignore
 import React from 'react'
 import './App.css'
-// import ExampleForm from './components/ExampleForm'
+
+function clickMe (){
+  alert('You clicked me!');
+}
+
 function App() {
   return (
     <div className='App'>
-      {/* <ExampleForm /> */}
-      <h1>This is just to test things</h1>
+      <h1>This is a simple BT app</h1>
+      <button onClick = {clickMe}>
+        Button
+      </button>
     </div>
   )
 }
