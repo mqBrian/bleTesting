@@ -1,12 +1,12 @@
 //@ts-ignore
 import React from 'react'
 import './App.css'
-import ExampleForm from './components/ExampleForm'
-
+// import ExampleForm from './components/ExampleForm'
 function App() {
   return (
     <div className='App'>
-      <ExampleForm />
+      {/* <ExampleForm /> */}
+      <h1>This is just to test things</h1>
     </div>
   )
 }
