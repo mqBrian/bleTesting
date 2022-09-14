@@ -31,10 +31,13 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleDependency
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation project(':capacitor-android')
     testImplementation "junit:junit:$junitVersion"
+    //noinspection GradleDependency
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    //noinspection GradleDependency
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
 }

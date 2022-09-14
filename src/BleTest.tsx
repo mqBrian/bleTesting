@@ -1,7 +1,5 @@
 import { BleClient, numberToUUID } from "@capacitor-community/bluetooth-le";
 
-const HEART_RATE_SERVICE = numberToUUID(0x180d);
-
 export async function scan(): Promise<void> {
   try {
     await BleClient.initialize();
@@ -22,4 +20,19 @@ export async function scan(): Promise<void> {
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function sett(): Promise<void> {
+  await BleClient.initialize();
+  await BleClient.openBluetoothSettings();
+}
+
+export async function alive(): Promise<void> {
+  await BleClient.initialize();
+  await BleClient.enable();
+}
+
+export async function dead(): Promise<void> {
+  await BleClient.initialize();
+  await BleClient.disable();
 }
