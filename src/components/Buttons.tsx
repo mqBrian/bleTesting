@@ -1,7 +1,4 @@
 //@ts-ignore
-import React from "react";
-import "./App.css";
-import "./BleTest";
 import { alive, dead, scan, sett } from "../BleTest";
 
 function Buttons() {

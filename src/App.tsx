@@ -2,7 +2,6 @@
 import React from "react";
 import "./App.css";
 import "./BleTest";
-import { alive, dead, scan, sett } from "./BleTest";
 import Buttons from "./components/Buttons";
 
 function App() {
