@@ -29,7 +29,7 @@ yarn build - (runs react-scripts-build + npx cap copy + npx cap android)
 npx cap open android
 ```
 
-## App capabilities
+## Versions
 
 - 30/08 (v1.1) - The application has 1 button that alerts when clicked
 - 14/09 (v1.2) - Added 2 more buttons that can activae and deactivate BT on the device + Added a button that can be used to accces the bluetooth settings of the phone
